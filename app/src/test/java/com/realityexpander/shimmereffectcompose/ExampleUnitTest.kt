@@ -1,4 +1,4 @@
-package com.plcoding.shimmereffectcompose
+package com.realityexpander.shimmereffectcompose
 
 import org.junit.Test
 

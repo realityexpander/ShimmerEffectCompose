@@ -1,4 +1,4 @@
-package com.plcoding.shimmereffectcompose
+package com.realityexpander.shimmereffectcompose
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -56,6 +56,9 @@ fun ShimmerListItem(
     }
 }
 
+// Custom modifier to add shimmer effect to any composable
+// Shimmer needs to keep state for each element applied, so we use the 'composed' function
+// to create a stateful modifier with an internal state (infinite animation and size).
 fun Modifier.shimmerEffect(): Modifier = composed {
     var size by remember {
         mutableStateOf(IntSize.Zero)
@@ -72,15 +75,17 @@ fun Modifier.shimmerEffect(): Modifier = composed {
     background(
         brush = Brush.linearGradient(
             colors = listOf(
-                Color(0xFFB8B5B5),
+//                Color(0xFFB8B5B5),
+                Color(0xFFFF0000),
                 Color(0xFF8F8B8B),
                 Color(0xFFB8B5B5),
-            ),
+            ).reversed(), // because of negative offset, the order of the colors is reversed
             start = Offset(startOffsetX, 0f),
             end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
         )
     )
-        .onGloballyPositioned {
-            size = it.size
+        .onGloballyPositioned { layoutCoords ->
+            // save the size of the element
+            size = layoutCoords.size
         }
 }

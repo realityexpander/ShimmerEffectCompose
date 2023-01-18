@@ -1,4 +1,4 @@
-package com.plcoding.shimmereffectcompose
+package com.realityexpander.shimmereffectcompose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,16 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.plcoding.shimmereffectcompose.ui.theme.ShimmerEffectComposeTheme
+import com.realityexpander.shimmereffectcompose.ui.theme.ShimmerEffectComposeTheme
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
