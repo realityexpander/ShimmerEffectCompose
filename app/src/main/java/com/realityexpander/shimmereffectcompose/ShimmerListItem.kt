@@ -104,6 +104,7 @@ fun Modifier.shimmerEffect(): Modifier = composed {
         }
 }
 
+// Custom modifier to add warning effect to any composable
 // More advanced example: https://gist.github.com/DavidIbrahim/236dadbccd99c4fd328e53587df35a21
 fun Modifier.warningEffect(
     delay: Int = 1000,
