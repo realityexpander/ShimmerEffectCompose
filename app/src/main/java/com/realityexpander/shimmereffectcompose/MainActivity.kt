@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf(true)
                 }
                 LaunchedEffect(key1 = true) {
-                    delay(10000)
+                    delay(500)
                     isLoading = false
                 }
                 LazyColumn(

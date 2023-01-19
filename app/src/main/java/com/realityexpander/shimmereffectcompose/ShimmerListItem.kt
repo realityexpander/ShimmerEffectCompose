@@ -1,12 +1,10 @@
 package com.realityexpander.shimmereffectcompose
 
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -14,9 +12,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import kotlin.random.Random
 
 @Composable
 fun ShimmerListItem(
@@ -52,6 +52,20 @@ fun ShimmerListItem(
             }
         }
     } else {
+        Column(
+            modifier = Modifier
+                .warningEffect(2000, startColor = Color.Black, endColor = Color.Yellow)
+        ) {
+            Text(
+                "hello",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .background(Color.White)
+                ,
+                color = Color.Black
+            )
+        }
         contentAfterLoading()
     }
 }
@@ -85,7 +99,52 @@ fun Modifier.shimmerEffect(): Modifier = composed {
         )
     )
         .onGloballyPositioned { layoutCoords ->
-            // save the size of the element
+            // save the size of the element (after layout)
+            size = layoutCoords.size
+        }
+}
+
+// More advanced example: https://gist.github.com/DavidIbrahim/236dadbccd99c4fd328e53587df35a21
+fun Modifier.warningEffect(
+    delay: Int = 1000,
+    spacing: Float = 50f,
+    startColor: Color = Color.Black,
+    endColor: Color = Color.Yellow
+): Modifier = composed {
+
+    var size by remember {
+        mutableStateOf(IntSize.Zero)
+    }
+    val transition = rememberInfiniteTransition()
+    val animatedFloat by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                delay,
+                easing = LinearEasing
+            )
+        )
+    )
+
+    background(
+            brush = Brush.linearGradient(
+                0f to startColor,
+                0.25f to startColor,
+
+                0.25f to endColor,
+                0.75f to endColor,
+
+                0.75f to startColor,
+                1f to startColor,
+
+                start = Offset(0.0f + animatedFloat*100, 0.0f + animatedFloat*100),
+                end = Offset(spacing + animatedFloat*100, spacing + animatedFloat*100),
+                tileMode = TileMode.Repeated
+            ),
+        )
+        .onGloballyPositioned { layoutCoords ->
+            // save the size of the element (after layout)
             size = layoutCoords.size
         }
 }
